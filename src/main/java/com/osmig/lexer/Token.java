@@ -5,6 +5,7 @@ enum TokenType {
     NUMBER,
     OPERATOR,
     KEYWORD,
+    NEWLINE
 }
 
 // Token class with updated terminology (using "label" for clarity)

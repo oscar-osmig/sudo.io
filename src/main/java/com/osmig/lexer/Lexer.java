@@ -21,6 +21,9 @@ class Lexer {
                 tokens.add(number());
             } else if (Character.isAlphabetic(current)) {
                 tokens.add(keywordAsOperator());
+            } else if (current == '\n') {
+                tokens.add(new Token(TokenType.NEWLINE, null, null));
+                position++;
             } else {
                 position++;  // Skip any unrecognized characters (like spaces)
             }
