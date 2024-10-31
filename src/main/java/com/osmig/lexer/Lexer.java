@@ -38,7 +38,8 @@ class Lexer {
 
     private Token number() {
         int start = position;
-        while (position < input.length() && Character.isDigit(input.charAt(position))) {
+        while (position < input.length() && Character.isDigit(input.charAt(position)) ||
+                position < input.length() && input.contains(".")) {
             position++;
         }
         String numberStr = input.substring(start, position);
@@ -57,8 +58,11 @@ class Lexer {
         } else if (word.equals("IF") || word.equals("WHILE") || word.equals("FOR") ||
                 word.equals("NOT") || word.equals("EQUALS") || word.equals("PRINT") ||
                 word.equals("LOOP") || word.equals("LIST") || word.equals("INDEX") ||
-                word.equals("FROM") || word.equals("TO") || word.equals("IN") || word.equals("AT")) {
+                word.equals("FROM") || word.equals("TO") || word.equals("IN") ||
+                word.equals("AT")) {
             return new Token(TokenType.KEYWORD, word, null);
+        } else if ( word.equals("INT")) {
+            return new Token(TokenType.INTEGER, word, null);
         } else {
             return new Token(TokenType.IDENTIFIER, word, null);
         }

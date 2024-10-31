@@ -7,5 +7,6 @@ public enum TokenType {
     KEYWORD,
     STRING,
     NEWLINE,
+    INTEGER,
     INDENT
 }

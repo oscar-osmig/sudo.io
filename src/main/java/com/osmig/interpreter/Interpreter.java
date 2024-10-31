@@ -36,7 +36,6 @@ public class Interpreter {
                         assign(varName); // Assign the value to the variable
                     }
                 }
-
             }
             // Move to the next token
             else {
@@ -47,7 +46,9 @@ public class Interpreter {
 
     private void assign(String varName) {
         Token valueToken = tokens.get(currentTokenIndex);
+
         if (valueToken.getType() == TokenType.NUMBER) {
+            //TODO parse int if INT is before number
             double value = (double) valueToken.getValue(); // Get the integer value
             variables.put(varName, value); // Store in the variable map
         } else if (valueToken.getType() == TokenType.STRING) {
