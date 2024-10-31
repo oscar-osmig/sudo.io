@@ -1,16 +1,7 @@
 package com.osmig.lexer;
 
-enum TokenType {
-    IDENTIFIER,
-    NUMBER,
-    OPERATOR,
-    KEYWORD,
-    NEWLINE,
-    INDENT
-}
-
 // Token class with updated terminology (using "label" for clarity)
-class Token {
+public class Token {
     TokenType type;
     String label;
     Object value;
@@ -27,9 +18,12 @@ class Token {
             case KEYWORD:
             case IDENTIFIER:
             case OPERATOR:
+            case INDENT:
                 return type + " -> " + label;
             case NUMBER:
                 return type + " -> " + value;
+            case NEWLINE:
+                return type + " -> " + label;
             default:
                 return type + " -> " + label;
         }

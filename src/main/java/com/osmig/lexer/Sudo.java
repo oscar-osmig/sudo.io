@@ -1,6 +1,5 @@
 package com.osmig.lexer;
-
-
+import com.osmig.interpreter.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,31 +9,33 @@ import java.util.List;
 public class Sudo {
 
     public static void main(String[] args) throws IOException {
+        StringBuilder inputBuilder = new StringBuilder();
         BufferedReader bufferedReader = new BufferedReader(new FileReader("editor.txt"));
         String line;
-        char[] lineChar;
+
         List<String> code = new ArrayList<>();
-        System.out.println("\n==================== TOKENIZER ====================");
-        while ((line = bufferedReader.readLine()) != null){
+
+        // Read the entire file content
+        while ((line = bufferedReader.readLine()) != null) {
             code.add(line);
-            Lexer lexer = new Lexer(line);
-            List<Token> tokens = lexer.tokenize();
-
-            printToken(tokens);
-
+            inputBuilder.append(line).append("\n"); // Append the line and a newline character
         }
+        bufferedReader.close();
+
+        // Tokenize the entire input
+        String input = inputBuilder.toString(); // Convert to String for lexer
+        Lexer lexer = new Lexer(input);
+        List<Token> tokens = lexer.tokenize();
+
         System.out.println("\n==================== CODE ====================");
-        for (String lines : code){
+        for (String lines : code) {
             System.out.println(lines);
         }
 
-
-    }
-
-    public static void printToken(List<Token> tokens){
-        for (Token token : tokens) {
-            System.out.println(token);
-        }
+        // Interpret all tokens at once
+        System.out.println("\n==================== INTERPRETATION OUTPUT ====================");
+        Interpreter interpreter = new Interpreter(tokens);
+        interpreter.interpret();
     }
 
 }

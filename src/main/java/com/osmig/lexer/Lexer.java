@@ -13,26 +13,28 @@ class Lexer {
 
     public List<Token> tokenize() {
         List<Token> tokens = new ArrayList<>();
+
         int spaceCounter = 0;
         while (position < input.length()) {
             char current = input.charAt(position);
 
             if (Character.isDigit(current)) {
-                tokens.add(number());
+                Token numberToken = number();
+                tokens.add(numberToken);
+                System.out.println("Tokenized number: " + numberToken); // Debug
             } else if (Character.isAlphabetic(current)) {
-                tokens.add(keywordAsOperator());
+                Token keywordOrIdentifier = keywordAsOperator();
+                tokens.add(keywordOrIdentifier);
+                System.out.println("Tokenized identifier/keyword: " + keywordOrIdentifier); // Debug
             } else if (current == '\n') {
-                tokens.add(new Token(TokenType.NEWLINE, null, null));
+                Token newlineToken = new Token(TokenType.NEWLINE, null, null);
+                tokens.add(newlineToken);
+                System.out.println("Tokenized newline"); // Debug
                 position++;
-            }else if (current == ' ') {
-                    spaceCounter++;
-                    if (spaceCounter == 4){
-                        tokens.add((new Token(TokenType.INDENT, null, null)));
-                        spaceCounter = 0;
-                    }
-                    position++;
+            } else if (current == ' ') {
+                position++;
             } else {
-                position++;  // Skip any unrecognized characters (like spaces)
+                position++;  // Skip any unrecognized characters (like symbols)
             }
         }
 
@@ -55,17 +57,15 @@ class Lexer {
         }
         String word = input.substring(start, position);
 
-        // Recognize specific keywords as "OPERATOR"
         if (word.equals("ADD") || word.equals("SUBTRACT") || word.equals("MULTIPLY") || word.equals("DIVIDE")) {
             return new Token(TokenType.OPERATOR, word, null);
-        }
-        else if (word.equals("IF") || word.equals("WHILE") || word.equals("FOR") ||
-                 word.equals("NOT") || word.equals("EQUALS") || word.equals("PRINT") ||
-                 word.equals("LOOP") || word.equals("LIST") || word.equals("INDEX") ||
-                 word.equals("FROM") || word.equals("TO") || word.equals("IN") || word.equals("AT")) {
+        } else if (word.equals("IF") || word.equals("WHILE") || word.equals("FOR") ||
+                word.equals("NOT") || word.equals("EQUALS") || word.equals("PRINT") ||
+                word.equals("LOOP") || word.equals("LIST") || word.equals("INDEX") ||
+                word.equals("FROM") || word.equals("TO") || word.equals("IN") || word.equals("AT")) {
             return new Token(TokenType.KEYWORD, word, null);
-        }else {
-            return new Token(TokenType.IDENTIFIER, word, null);  // Treat other words as identifiers
+        } else {
+            return new Token(TokenType.IDENTIFIER, word, null);
         }
     }
 }
