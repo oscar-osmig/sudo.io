@@ -1,8 +1,4 @@
-a 'Hello, World!'
-b 'Some meme is the goat!'
-str '#'
-num 1
+a 10
+b 'sameen'
 PRINT a
 PRINT b
-PRINT str
-PRINT num
