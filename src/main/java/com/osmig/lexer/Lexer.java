@@ -43,7 +43,7 @@ class Lexer {
         while (position < input.length() && Character.isAlphabetic(input.charAt(position))) {
             position++;
         }
-        String word = input.substring(start, position).toUpperCase();
+        String word = input.substring(start, position);
 
         // Recognize specific keywords as "OPERATOR"
         if (word.equals("ADD") || word.equals("SUBTRACT") || word.equals("MULTIPLY") || word.equals("DIVIDE")) {
