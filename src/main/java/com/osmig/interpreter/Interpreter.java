@@ -48,7 +48,7 @@ public class Interpreter {
     private void assign(String varName) {
         Token valueToken = tokens.get(currentTokenIndex);
         if (valueToken.getType() == TokenType.NUMBER) {
-            int value = (int) valueToken.getValue(); // Get the integer value
+            double value = (double) valueToken.getValue(); // Get the integer value
             variables.put(varName, value); // Store in the variable map
         } else if (valueToken.getType() == TokenType.STRING) {
             String value = (String) valueToken.getValue(); // Get the string value

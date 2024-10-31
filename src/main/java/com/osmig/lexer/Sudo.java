@@ -20,6 +20,7 @@ public class Sudo {
             Lexer lexer = new Lexer(line);
             List<Token> tokens = lexer.tokenize();
             allTokens.addAll(tokens);  // Collect tokens from each line
+            System.out.println(tokens.toString());
         }
 
         System.out.println("\n==================== CODE ====================");

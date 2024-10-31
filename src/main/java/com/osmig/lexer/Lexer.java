@@ -42,7 +42,7 @@ class Lexer {
             position++;
         }
         String numberStr = input.substring(start, position);
-        return new Token(TokenType.NUMBER, numberStr, Integer.parseInt(numberStr));
+        return new Token(TokenType.NUMBER, numberStr, Double.parseDouble(numberStr));
     }
 
     private Token keywordAsOperator() {
