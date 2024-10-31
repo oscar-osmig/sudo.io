@@ -3,7 +3,8 @@ package com.osmig.lexer;
 enum TokenType {
     IDENTIFIER,
     NUMBER,
-    OPERATOR
+    OPERATOR,
+    KEYWORD,
 }
 
 // Token class with updated terminology (using "label" for clarity)
@@ -29,5 +30,29 @@ class Token {
             default:
                 return type + " -> " + label;
         }
+    }
+
+    public TokenType getType() {
+        return type;
+    }
+
+    public void setType(TokenType type) {
+        this.type = type;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public Object getValue() {
+        return value;
+    }
+
+    public void setValue(Object value) {
+        this.value = value;
     }
 }
