@@ -13,7 +13,7 @@ class Lexer {
 
     public List<Token> tokenize() {
         List<Token> tokens = new ArrayList<>();
-
+        int spaceCounter = 0;
         while (position < input.length()) {
             char current = input.charAt(position);
 
@@ -24,6 +24,13 @@ class Lexer {
             } else if (current == '\n') {
                 tokens.add(new Token(TokenType.NEWLINE, null, null));
                 position++;
+            }else if (current == ' ') {
+                    spaceCounter++;
+                    if (spaceCounter == 4){
+                        tokens.add((new Token(TokenType.INDENT, null, null)));
+                        spaceCounter = 0;
+                    }
+                    position++;
             } else {
                 position++;  // Skip any unrecognized characters (like spaces)
             }
@@ -55,8 +62,7 @@ class Lexer {
         else if (word.equals("IF") || word.equals("WHILE") || word.equals("FOR") ||
                    word.equals("NOT") || word.equals("EQUALS") || word.equals("PRINT") ) {
             return new Token(TokenType.KEYWORD, word, null);
-        }
-        else {
+        }else {
             return new Token(TokenType.IDENTIFIER, word, null);  // Treat other words as identifiers
         }
     }
