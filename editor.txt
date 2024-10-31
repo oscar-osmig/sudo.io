@@ -1,3 +1,13 @@
 myNum 5
+herNum 5
 IF myNum EQUALS herNum
     PRINT myNum
+
+LIST nums 2 3 4 5
+LOOP num IN nums
+    PRINT num
+init 0
+end 3
+LOOP i FROM init TO end
+    IF nums AT i EQUALS 2
+        PRINT nums AT i

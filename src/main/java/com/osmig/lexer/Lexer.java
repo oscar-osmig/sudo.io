@@ -60,7 +60,9 @@ class Lexer {
             return new Token(TokenType.OPERATOR, word, null);
         }
         else if (word.equals("IF") || word.equals("WHILE") || word.equals("FOR") ||
-                   word.equals("NOT") || word.equals("EQUALS") || word.equals("PRINT") ) {
+                 word.equals("NOT") || word.equals("EQUALS") || word.equals("PRINT") ||
+                 word.equals("LOOP") || word.equals("LIST") || word.equals("INDEX") ||
+                 word.equals("FROM") || word.equals("TO") || word.equals("IN") || word.equals("AT")) {
             return new Token(TokenType.KEYWORD, word, null);
         }else {
             return new Token(TokenType.IDENTIFIER, word, null);  // Treat other words as identifiers
