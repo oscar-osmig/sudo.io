@@ -48,7 +48,12 @@ class Lexer {
         // Recognize specific keywords as "OPERATOR"
         if (word.equals("ADD") || word.equals("SUBTRACT") || word.equals("MULTIPLY") || word.equals("DIVIDE")) {
             return new Token(TokenType.OPERATOR, word, null);
-        } else {
+        }
+        else if (word.equals("IF") || word.equals("WHILE") || word.equals("FOR") ||
+                   word.equals("NOT") || word.equals("EQUALS") || word.equals("PRINT") ) {
+            return new Token(TokenType.KEYWORD, word, null);
+        }
+        else {
             return new Token(TokenType.IDENTIFIER, word, null);  // Treat other words as identifiers
         }
     }

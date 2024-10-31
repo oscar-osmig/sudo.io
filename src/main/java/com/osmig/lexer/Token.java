@@ -22,6 +22,7 @@ class Token {
     @Override
     public String toString() {
         switch (type) {
+            case KEYWORD:
             case IDENTIFIER:
             case OPERATOR:
                 return type + " -> " + label;
