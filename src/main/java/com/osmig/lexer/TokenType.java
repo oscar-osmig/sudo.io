@@ -5,6 +5,7 @@ public enum TokenType {
     NUMBER,
     OPERATOR,
     KEYWORD,
+    STRING,
     NEWLINE,
     INDENT
 }

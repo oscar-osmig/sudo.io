@@ -9,32 +9,28 @@ import java.util.List;
 public class Sudo {
 
     public static void main(String[] args) throws IOException {
-        StringBuilder inputBuilder = new StringBuilder();
         BufferedReader bufferedReader = new BufferedReader(new FileReader("editor.txt"));
         String line;
-
+        List<Token> allTokens = new ArrayList<>();
         List<String> code = new ArrayList<>();
 
-        // Read the entire file content
+        // Read and tokenize each line
         while ((line = bufferedReader.readLine()) != null) {
             code.add(line);
-            inputBuilder.append(line).append("\n"); // Append the line and a newline character
+            Lexer lexer = new Lexer(line);
+            List<Token> tokens = lexer.tokenize();
+            allTokens.addAll(tokens);  // Collect tokens from each line
         }
-        bufferedReader.close();
-
-        // Tokenize the entire input
-        String input = inputBuilder.toString(); // Convert to String for lexer
-        Lexer lexer = new Lexer(input);
-        List<Token> tokens = lexer.tokenize();
 
         System.out.println("\n==================== CODE ====================");
-        for (String lines : code) {
-            System.out.println(lines);
+        for (String codeLine : code) {
+            System.out.println(codeLine);
         }
 
-        // Interpret all tokens at once
         System.out.println("\n==================== INTERPRETATION OUTPUT ====================");
-        Interpreter interpreter = new Interpreter(tokens);
+
+        // Pass all tokens to a single Interpreter instance
+        Interpreter interpreter = new Interpreter(allTokens);
         interpreter.interpret();
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Interpreter {
-    private final Map<String, Integer> variables = new HashMap<>(); // Store variable names and values
+    private final Map<String, Object> variables = new HashMap<>(); // Store variable names and values
     private final List<Token> tokens;
     private int currentTokenIndex = 0;
 
@@ -29,10 +29,14 @@ public class Interpreter {
                 String varName = token.getLabel(); // Get the variable name
                 currentTokenIndex++;
 
-                // Check for a NUMBER token following the IDENTIFIER
-                if (currentTokenIndex < tokens.size() && tokens.get(currentTokenIndex).getType() == TokenType.NUMBER) {
-                    assign(varName); // Assign the value to the variable
+                // Check for a NUMBER or STRING token following the IDENTIFIER
+                if (currentTokenIndex < tokens.size()) {
+                    Token nextToken = tokens.get(currentTokenIndex);
+                    if (nextToken.getType() == TokenType.NUMBER || nextToken.getType() == TokenType.STRING) {
+                        assign(varName); // Assign the value to the variable
+                    }
                 }
+
             }
             // Move to the next token
             else {
@@ -46,15 +50,18 @@ public class Interpreter {
         if (valueToken.getType() == TokenType.NUMBER) {
             int value = (int) valueToken.getValue(); // Get the integer value
             variables.put(varName, value); // Store in the variable map
-            currentTokenIndex++; // Move to the next token
+        } else if (valueToken.getType() == TokenType.STRING) {
+            String value = (String) valueToken.getValue(); // Get the string value
+            variables.put(varName, value); // Store in the variable map
         }
+        currentTokenIndex++; // Move to the next token
     }
 
     private void print() {
         Token nextToken = tokens.get(currentTokenIndex);
         if (nextToken.getType() == TokenType.IDENTIFIER) {
             String varName = nextToken.getLabel(); // Get the variable name
-            Integer value = variables.get(varName); // Retrieve its value
+            Object value = variables.get(varName); // Retrieve its value
 
             if (value != null) {
                 System.out.println(value); // Print the value if it exists

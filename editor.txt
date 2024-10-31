@@ -1,6 +1,8 @@
-x 10
-y 5
-z 7
-PRINT x
-PRINT y
-PRINT z
+a 'Hello, World!'
+b 'Some meme is the goat!'
+str '#'
+num 1
+PRINT a
+PRINT b
+PRINT str
+PRINT num

@@ -14,27 +14,22 @@ class Lexer {
     public List<Token> tokenize() {
         List<Token> tokens = new ArrayList<>();
 
-        int spaceCounter = 0;
         while (position < input.length()) {
             char current = input.charAt(position);
 
             if (Character.isDigit(current)) {
-                Token numberToken = number();
-                tokens.add(numberToken);
-                System.out.println("Tokenized number: " + numberToken); // Debug
+                tokens.add(number());
             } else if (Character.isAlphabetic(current)) {
-                Token keywordOrIdentifier = keywordAsOperator();
-                tokens.add(keywordOrIdentifier);
-                System.out.println("Tokenized identifier/keyword: " + keywordOrIdentifier); // Debug
+                tokens.add(keywordAsOperator());
+            } else if (current == '\'') {  // Check for starting quote of string
+                tokens.add(string());
             } else if (current == '\n') {
-                Token newlineToken = new Token(TokenType.NEWLINE, null, null);
-                tokens.add(newlineToken);
-                System.out.println("Tokenized newline"); // Debug
+                tokens.add(new Token(TokenType.NEWLINE, null, null));
                 position++;
             } else if (current == ' ') {
                 position++;
             } else {
-                position++;  // Skip any unrecognized characters (like symbols)
+                position++;  // Skip any unrecognized characters
             }
         }
 
@@ -67,5 +62,20 @@ class Lexer {
         } else {
             return new Token(TokenType.IDENTIFIER, word, null);
         }
+    }
+
+    private Token string() {
+        position++; // Move past the opening quote
+        int start = position;
+
+        // Read until the closing quote or end of input
+        while (position < input.length() && input.charAt(position) != '\'') {
+            position++;
+        }
+
+        String strValue = input.substring(start, position); // Extract the string value
+        position++; // Move past the closing quote if present
+
+        return new Token(TokenType.STRING, strValue, strValue);
     }
 }

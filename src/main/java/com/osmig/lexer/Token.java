@@ -14,19 +14,11 @@ public class Token {
 
     @Override
     public String toString() {
-        switch (type) {
-            case KEYWORD:
-            case IDENTIFIER:
-            case OPERATOR:
-            case INDENT:
-                return type + " -> " + label;
-            case NUMBER:
-                return type + " -> " + value;
-            case NEWLINE:
-                return type + " -> " + label;
-            default:
-                return type + " -> " + label;
-        }
+        return "Token{" +
+                "type -> " + type +
+                ", label -> '" + label + '\'' +
+                ", value -> " + value +
+                '}';
     }
 
     public TokenType getType() {
