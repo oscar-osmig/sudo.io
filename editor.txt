@@ -1,5 +1,5 @@
 a 10.0
-b INT 5
+b INT 5.0
 c 'Hello'
 PRINT a
 PRINT b

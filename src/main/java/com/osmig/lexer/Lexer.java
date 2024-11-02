@@ -37,6 +37,8 @@ class Lexer {
                 return new Token(TokenType.KEYWORD, item);
             } else if (isNumber(item)){
                 return new Token(TokenType.NUMBER, item);
+            } else if (isString(item)) {
+                return new Token(TokenType.STRING, item);
             } else if (item.matches("[a-zA-Z_][a-zA-Z0-9_]*")){
                 return new Token(TokenType.IDENTIFIER, item);
             }else if (item.equals("\n")) {
@@ -50,6 +52,10 @@ class Lexer {
             advanceLine();
             return getNextToken();
         }
+    }
+
+    private boolean isString(String item) {
+        return item.matches("^'[^']*'$");
     }
 
     private boolean isNumber(String item) {
