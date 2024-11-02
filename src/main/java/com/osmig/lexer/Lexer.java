@@ -38,6 +38,10 @@ public class Lexer {
             tokenList.add("\\n");
         }
 
+        if (tokenList.getLast().equals("\\n")){
+            tokenList.add("\\E");
+        }
+
         for (String token : tokenList) {
             if (token.equals("IS")) { // Check if the token is capitalized
                 tokenTypes.add(TokenType.KEYWORD); // Assign to KEYWORD
@@ -50,6 +54,8 @@ public class Lexer {
             }
             else if (token.equals("\\n")){
                 tokenTypes.add(TokenType.NEWLINE);
+            }else if (token.equals("\\E")){
+                tokenTypes.add(TokenType.EOF);
             }
             else {
                 tokenTypes.add(TokenType.UNKNOWN);
