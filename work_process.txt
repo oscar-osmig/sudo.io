@@ -1,0 +1,10 @@
+
+1. get lines of code from txt file 'editor.txt'
+2. assign each line to a List of Strings
+3. pass it to Tokenizer (lexer)
+4. assign variables
+5.
+
+
+
+

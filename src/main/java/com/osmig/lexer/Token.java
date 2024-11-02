@@ -3,22 +3,19 @@ package com.osmig.lexer;
 // Token class with updated terminology (using "label" for clarity)
 public class Token {
     TokenType type;
-    String label;
-    Object value;
+    String value;
 
-    public Token(TokenType type, String label, Object value) {
+    public Token(TokenType type, String value) {
         this.type = type;
-        this.label = label;
         this.value = value;
+
     }
 
     @Override
     public String toString() {
         return "Token " +
                 "type -> " + type +
-                ", label -> '" + label + '\'' +
-                ", value -> " + value +
-                '}';
+                ", value -> " + value ;
     }
 
     public TokenType getType() {
@@ -29,19 +26,11 @@ public class Token {
         this.type = type;
     }
 
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public Object getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(Object value) {
+    public void setValue(String value) {
         this.value = value;
     }
 }

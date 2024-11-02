@@ -1,4 +1,4 @@
-a 10.5555555555
+a 10.0
 b INT 5
 c 'Hello'
 PRINT a

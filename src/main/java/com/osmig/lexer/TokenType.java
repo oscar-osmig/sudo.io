@@ -8,5 +8,8 @@ public enum TokenType {
     STRING,
     NEWLINE,
     INTEGER,
-    INDENT
+    INDENT,
+    EOF,
+    UNKNOWN,
+
 }
