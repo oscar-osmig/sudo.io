@@ -15,17 +15,13 @@ public class Sudo {
         //List<String> codeLines  = codeScanner("editor.txt"); // returns list of each line of code
         //System.out.println(codeLines.getFirst());
         List<String> lines = codeScanner();
-
         Lexer lexer = new Lexer(lines);
-        // do to print tokenized tokens
-//        Token token;
-//        while ((token = lexer.getNextToken()).getType() != TokenType.EOF) {
-//            System.out.println(token);
-//        }
-        Parser parser = new Parser(lexer);
+       Token token;
 
-            // parse the input
-            parser.parse();
+        System.out.println("Token -> Type -> Value");
+        while ((token = lexer.getNextToken()).getType() != TokenType.EOF){
+            System.out.println("Token -> " + token.getType() + " -> " + token.getValue());
+        }
 
     }
         public static List<String> codeScanner() throws IOException {

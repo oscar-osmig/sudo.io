@@ -1,1 +1,8 @@
-a 10
+a
+INT
+10
+LOOP
+PRINT a
+b 20.5
+PRINT b
+'Hello, World!'
