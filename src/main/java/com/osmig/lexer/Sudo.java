@@ -1,5 +1,7 @@
 package com.osmig.lexer;
 
+import com.osmig.parser.Parser;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,17 +17,23 @@ public class Sudo {
         List<String> lines = codeScanner();
 
         Lexer lexer = new Lexer(lines);
-        Token token;
-        while ((token = lexer.getNextToken()).getType() !=  TokenType.EOF){
-            System.out.println(token);
-        }
-    }
+        // do to print tokenized tokens
+//        Token token;
+//        while ((token = lexer.getNextToken()).getType() != TokenType.EOF) {
+//            System.out.println(token);
+//        }
+        Parser parser = new Parser(lexer);
 
-    public static List<String> codeScanner() throws IOException {
-        Path filePath = Path.of("editor.txt");  // Set the path to your file
-        List<String> lines;
-        lines = Files.readAllLines(filePath);
-        return lines;
+            // parse the input
+            parser.parse();
+
     }
+        public static List<String> codeScanner() throws IOException {
+            Path filePath = Path.of("editor.txt");  // Set the path to your file
+            List<String> codelines;
+            codelines = Files.readAllLines(filePath);
+            return codelines;
+        }
+
 }
 

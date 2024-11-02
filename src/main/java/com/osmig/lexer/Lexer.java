@@ -3,10 +3,10 @@ package com.osmig.lexer;
 import java.util.ArrayList;
 import java.util.List;
 
-class Lexer {
+public class Lexer {
     private List<String> lines; // list of line to be tokenized
     private int lineIndex = 0; // tracks index of current line
-    private int tokenIndex = 0; // tracks current token in line
+    public int tokenIndex = 0; // tracks current token in line
     private String[] currentTokens; // tokens of current line
 
     public Lexer(List<String> lines){
@@ -23,39 +23,15 @@ class Lexer {
             currentTokens = null;
         }
     }
+
     // retriving the next token and clasifying it
     public Token getNextToken(){
-        if (currentTokens == null){
-            return new Token(TokenType.EOF, ""); // end of file token
-        }
-        if (tokenIndex < currentTokens.length){
-            String item = currentTokens[tokenIndex];
-            tokenIndex++;
 
-            // determine the type of token base on item context
-            if (item.equals("INT") || item.equals("PRINT")){
-                return new Token(TokenType.KEYWORD, item);
-            } else if (isNumber(item)){
-                return new Token(TokenType.NUMBER, item);
-            } else if (isString(item)) {
-                return new Token(TokenType.STRING, item);
-            } else if (item.matches("[a-zA-Z_][a-zA-Z0-9_]*")){
-                return new Token(TokenType.IDENTIFIER, item);
-            }else if (item.equals("\n")) {
-                return new Token(TokenType.NEWLINE, "");
-            }else {
-                return new Token(TokenType.UNKNOWN, item);
-            }
-
-        }else {
-            // move to next line and retrieve the next token
-            advanceLine();
-            return getNextToken();
-        }
+        return null;
     }
 
     private boolean isString(String item) {
-        return item.matches("^'[^']*'$");
+        return item.startsWith("'") && item.endsWith("'") && item.length() > 2;
     }
 
     private boolean isNumber(String item) {
