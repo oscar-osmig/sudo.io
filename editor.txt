@@ -1,8 +1,4 @@
-a
-INT
-10
-LOOP
-PRINT a
-b 20.5
-PRINT b
-'Hello, World!'
+IS
+a IS 10.0
+b IS 20.4
+"hello, world!"

@@ -1,89 +1,84 @@
 package com.osmig.lexer;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import static com.osmig.lexer.Sudo.codeScanner;
 import static javax.lang.model.SourceVersion.isIdentifier;
 
 public class Lexer {
-    private List<String> lines; // list of line to be tokenized
-    private int currentLineIndex = 0; // tracks index of current line
-    public int tokenIndex = 0; // tracks current token in line
-    private String[] currentTokens; // tokens of current line
+   private List<String> lines;
 
-    public Lexer(List<String> lines){
+
+    public Lexer(List<String> lines) throws IOException {
         this.lines = lines;
-        advanceLine(); // Initialized with the first line of code
+        tokenizeEachLine();
     }
-    // advances to the next
-    private void advanceLine() {
-        if(currentLineIndex < lines.size()){
-            currentTokens = lines.get(currentLineIndex).split(" "); // splits the line by spaces
-            tokenIndex = 0;
-            currentLineIndex++;
-        }else {
-            currentTokens = null;
-        }
-    }
+
     private static final Set<String> KEYWORDS = Set.of("PRINT", "INT", "LOOP"); // Add any other keywords here
 
-    public Token getNextToken() {
-        if (currentTokens == null) {
-            return new Token(TokenType.EOF, ""); // End of file
-        }
+    public Token tokenizeEachLine() {
+        List<String> lines = this.lines; // Example list
+        List<String> tokenList = new ArrayList<>();
+        List<TokenType> tokenTypes = new ArrayList<>();
 
-        // If we still have tokens on the current line
-        if (tokenIndex < currentTokens.length) {
-            String item = currentTokens[tokenIndex++];
-
-            // Token classification
-            if (KEYWORDS.contains(item)) {
-                return new Token(TokenType.KEYWORD, item);
-            } else if (isNumber(item)) {
-                return new Token(TokenType.NUMBER, item);
-            }else if (item.startsWith("'")) {
-                // Handle strings starting with a single quote
-                StringBuilder stringToken = new StringBuilder(item);
-
-                // Keep reading until we find the closing single quote
-                while (!item.endsWith("'")) {
-                    if (tokenIndex >= currentTokens.length) {
-                        advanceLine(); // Move to the next line if end of line reached
-                        if (currentTokens == null) {
-                            throw new RuntimeException("Unterminated string literal");
-                        }
-                    }
-
-                    item = currentTokens[tokenIndex++];
-                    stringToken.append(" ").append(item);
-                }
-
-                // Remove the surrounding single quotes
-                String fullString = stringToken.toString();
-                return new Token(TokenType.STRING, fullString.replaceAll("^'|'$", ""));
-            }else if (isIdentifier(item)) {
-                return new Token(TokenType.IDENTIFIER, item);
-            } else {
-                return new Token(TokenType.UNKNOWN, item);
+        for (String line : lines) {
+            String[] pieces = line.split(" "); // Split each line by space
+            Pattern pattern = Pattern.compile("\"([^\"]*)\"|\\S+");
+            Matcher matcher = pattern.matcher(line);
+            while (matcher.find()) {
+                String token = matcher.group(); // This will give us the matched token
+                tokenList.add(token);
             }
-        } else {
-            // No more tokens on this line, move to the next line
-            advanceLine();
-            return new Token(TokenType.NEWLINE, ""); // Add newline token after each line
+            tokenList.add("\\n");
         }
+
+        for (String token : tokenList) {
+            if (token.equals("IS")) { // Check if the token is capitalized
+                tokenTypes.add(TokenType.KEYWORD); // Assign to KEYWORD
+            } else if (isIdentifier(token)){
+                tokenTypes.add(TokenType.IDENTIFIER);
+            }else if (isDecimalNumber(token)) { // Check if token is a decimal number
+                tokenTypes.add(TokenType.NUMBER);
+            }else if (isStringLiteral(token)){
+                tokenTypes.add(TokenType.STRING);
+            }
+            else if (token.equals("\\n")){
+                tokenTypes.add(TokenType.NEWLINE);
+            }
+            else {
+                tokenTypes.add(TokenType.UNKNOWN);
+            }
+        }
+
+        // Example output
+        for (int i = 0; i < tokenList.size(); i++) {
+            System.out.println("Token: " + tokenList.get(i) + ", Type: " + tokenTypes.get(i));
+        }
+
+        return null;
     }
 
-//    private boolean isString(String item) {
-//        return item.startsWith("'") && item.endsWith("'") && item.length() >= 2;
-//    }
+    private static boolean isStringLiteral(String token) {
+        return token.matches("^\".*\"$");
+    }
+
+    private boolean isDecimalNumber(String token) {
+        String decimalRegex = "-?\\d+\\.\\d+";
+        Pattern pattern = Pattern.compile(decimalRegex);
+        Matcher matcher = pattern.matcher(token);
+        return matcher.matches(); // Returns true if the token matches the regex
+    }
 
     private boolean isIdentifier(String s) {
         return s.matches("[a-zA-Z_][a-zA-Z0-9_]*");
     }
 
-    private boolean isNumber(String s) {
-        return s.matches("\\d+(\\.\\d+)?");
-    }
+
 
 }

@@ -13,7 +13,7 @@ public class Token {
 
     @Override
     public String toString() {
-        return "Token " + "Type" + "Value\n" +
+        return "Token " + "Type" + "Value" +
                 "Token " +
                 "type -> " + type +
                 ", value -> " + value ;
