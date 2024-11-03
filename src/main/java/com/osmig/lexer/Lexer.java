@@ -1,10 +1,9 @@
 package com.osmig.lexer;
 
+import com.osmig.parser.Parser;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,7 +20,6 @@ public class Lexer {
     }
 
     private static final Set<String> KEYWORDS = Set.of("PRINT", "INT", "LOOP"); // Add any other keywords here
-
     public Token tokenizeEachLine() {
         List<String> lines = this.lines; // Example list
         List<String> tokenList = new ArrayList<>();
@@ -62,10 +60,11 @@ public class Lexer {
             }
         }
 
-        // Example output
-        for (int i = 0; i < tokenList.size(); i++) {
-            System.out.println("Token: " + tokenList.get(i) + ", Type: " + tokenTypes.get(i));
+        for(int i = 0; i<tokenList.size(); i++){
+            System.out.println("Token -> " + tokenList.get(i) + ": Type -> " + tokenTypes.get(i));
         }
+
+        Parser parser = new Parser(tokenList, tokenTypes);
 
         return null;
     }

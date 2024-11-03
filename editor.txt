@@ -2,3 +2,4 @@ IS
 a IS 10.0
 b IS 20.4
 "hello, world!"
+20.0

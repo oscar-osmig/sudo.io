@@ -19,20 +19,12 @@ public class Sudo {
         List<String> lines = codeScanner();
         Lexer lexer = new Lexer(lines);
 
-        //Token token;
-
-//        System.out.println("Token -> Type -> Value");
-//        while ((token = lexer.getNextToken()).getType() != TokenType.EOF){
-//            System.out.println("Token -> " + token.getType() + " -> " + token.getValue());
-//        }
-
 //        System.out.println("\n============  code  ============");
 //        for (String line : lines){
 //            System.out.println(line);
 //        }
 //        System.out.println("============ output ============");
-//        Parser parser = new Parser(lexer);
-//        parser.parse();
+
     }
         public static List<String> codeScanner() throws IOException {
             BufferedReader bufferedReader = new BufferedReader(new FileReader("editor.txt"));
