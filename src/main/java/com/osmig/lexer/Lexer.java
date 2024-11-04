@@ -1,14 +1,9 @@
 package com.osmig.lexer;
 
-import com.osmig.parser.Parser;
-
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static com.osmig.lexer.Sudo.codeScanner;
-import static javax.lang.model.SourceVersion.isIdentifier;
 
 public class Lexer {
    private List<String> lines;
@@ -20,10 +15,11 @@ public class Lexer {
     }
 
     private static final Set<String> KEYWORDS = Set.of("PRINT", "INT", "LOOP"); // Add any other keywords here
-    public Token tokenizeEachLine() {
+    public List<Token> tokenizeEachLine() {
         List<String> lines = this.lines; // Example list
         List<String> tokenList = new ArrayList<>();
         List<TokenType> tokenTypes = new ArrayList<>();
+        List<Token> tokens = new ArrayList<>();
 
         for (String line : lines) {
             String[] pieces = line.split(" "); // Split each line by space
@@ -41,7 +37,7 @@ public class Lexer {
         }
 
         for (String token : tokenList) {
-            if (token.equals("IS")) { // Check if the token is capitalized
+            if (token.equals("IS") || token.equals("PRINT")) { // Check if the token is capitalized
                 tokenTypes.add(TokenType.KEYWORD); // Assign to KEYWORD
             } else if (isIdentifier(token)){
                 tokenTypes.add(TokenType.IDENTIFIER);
@@ -60,13 +56,25 @@ public class Lexer {
             }
         }
 
-        for(int i = 0; i<tokenList.size(); i++){
-            System.out.println("Token -> " + tokenList.get(i) + ": Type -> " + tokenTypes.get(i));
+        printTokens(tokenList, tokenTypes);
+
+        System.out.println("~made into token and added to list ~");
+        for (int i = 0; i< tokenList.size(); i++){
+            tokens.add(i, new Token(tokenTypes.get(i), tokenList.get(i)));
+            System.out.println(tokens);
         }
 
-        Parser parser = new Parser(tokenList, tokenTypes);
 
-        return null;
+        return tokens;
+    }
+
+    public static void printTokens(List<String> tokenList, List<TokenType> tokenTypes){
+        System.out.println("");
+        System.out.println("~Tokenized~");
+        for(int i = 0; i<tokenList.size(); i++){
+            System.out.println("Token -> " + tokenList.get(i) + " : Type -> " + tokenTypes.get(i));
+        }
+        System.out.println("");
     }
 
     private static boolean isStringLiteral(String token) {

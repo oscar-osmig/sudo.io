@@ -13,10 +13,9 @@ public class Token {
 
     @Override
     public String toString() {
-        return "Token " + "Type" + "Value" +
-                "Token " +
+        return "Token " +
                 "type -> " + type +
-                ", value -> " + value ;
+                " :: value -> " + value ;
     }
 
     public TokenType getType() {

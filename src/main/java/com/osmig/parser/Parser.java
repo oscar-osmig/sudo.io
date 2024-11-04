@@ -4,22 +4,23 @@ import com.osmig.lexer.*;
 import java.util.List;
 
 public class Parser {
-    private List<String> tokenList;
-    private List<TokenType> tokenType;
+    private List<Token> tokenList;
     private SymbolTable symbolTable;
 
-    public Parser(List<String> tokenList, List<TokenType> tokenType) {
+    public Parser(List<Token> tokens) {
         this.tokenList = tokenList;
-        this.tokenType = tokenType;
         this.symbolTable = new SymbolTable();
-        parse();
+    }
+
+    public void printTokens(List<Token> tokens){
+        System.out.println("\n");
+        for(int i = 0; i<tokenList.size(); i++){
+            System.out.println("Token -> " + ": Type -> " );
+        }
     }
 
     public void parse() { // the logic executor
-        System.out.println("\n");
-        for(int i = 0; i<tokenList.size(); i++){
-            System.out.println("Token -> " + tokenList.get(i) + ": Type -> " + tokenType.get(i));
-        }
+
     }
 
     private void handleAssignment(Token identifierToken)
