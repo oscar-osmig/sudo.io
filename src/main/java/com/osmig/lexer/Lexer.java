@@ -57,16 +57,21 @@ public class Lexer {
         }
 
         printTokens(tokenList, tokenTypes);
+        List<Token> tokens1 = getTokenList(tokens,tokenTypes, tokenList);
+        System.out.println(tokens1);
 
+        return tokens1;
+    }
+
+    private List<Token> getTokenList(List<Token> tokens, List<TokenType> tokenTypes, List<String> tokenList) {
         System.out.println("~made into token and added to list ~");
         for (int i = 0; i< tokenList.size(); i++){
             tokens.add(i, new Token(tokenTypes.get(i), tokenList.get(i)));
-            System.out.println(tokens);
+            // sout(tokens)
         }
-
-
         return tokens;
     }
+
 
     public static void printTokens(List<String> tokenList, List<TokenType> tokenTypes){
         System.out.println("");
