@@ -8,7 +8,7 @@ public class Parser {
     private SymbolTable symbolTable;
 
     public Parser(List<Token> tokens) {
-        this.tokenList = tokenList;
+        this.tokenList = tokens;
         this.symbolTable = new SymbolTable();
     }
 
@@ -34,4 +34,19 @@ public class Parser {
 
     }
 
+    public List<Token> getTokenList() {
+        return tokenList;
+    }
+
+    public void setTokenList(List<Token> tokenList) {
+        this.tokenList = tokenList;
+    }
+
+    public SymbolTable getSymbolTable() {
+        return symbolTable;
+    }
+
+    public void setSymbolTable(SymbolTable symbolTable) {
+        this.symbolTable = symbolTable;
+    }
 }

@@ -57,6 +57,7 @@ public class Lexer {
                 System.out.println("unknow token: '" + token + "' or symbol, expected a: Identifier, Keyword, number, or native symbol in line " + lineCount);
                 tokenTypes.add(TokenType.UNKNOWN);
                 unknownToken = true;
+                break;
             }
         }
 
@@ -74,6 +75,7 @@ public class Lexer {
     private List<Token> getTokenList(List<TokenType> tokenTypes, List<String> tokenList) {
         List<Token> tokens = new ArrayList<>();
         System.out.println("~made into token and added to list ~");
+        System.out.println("[token type :: value, ...]");
         for (int i = 0; i< tokenList.size(); i++){
             tokens.add(i, new Token(tokenTypes.get(i), tokenList.get(i)));
             // sout(tokens)
@@ -84,9 +86,11 @@ public class Lexer {
 
     public static void printTokens(List<String> tokenList, List<TokenType> tokenTypes){
         System.out.println("");
+        int count = 1;
         System.out.println("~Tokenized~");
         for(int i = 0; i<tokenList.size(); i++){
-            System.out.println("Token -> " + tokenList.get(i) + " : Type -> " + tokenTypes.get(i));
+            System.out.println("Token " + count + " -> " + tokenList.get(i) + " : Type -> " + tokenTypes.get(i));
+            count++;
         }
         System.out.println("");
     }
