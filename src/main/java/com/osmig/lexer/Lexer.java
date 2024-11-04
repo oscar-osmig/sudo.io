@@ -19,6 +19,7 @@ public class Lexer {
         List<String> lines = this.lines; // Example list
         List<String> tokenList = new ArrayList<>();
         List<TokenType> tokenTypes = new ArrayList<>();
+        boolean unknownToken = false;
 
         for (String line : lines) {
             String[] pieces = line.split(" "); // Split each line by space
@@ -34,7 +35,7 @@ public class Lexer {
         if (tokenList.getLast().equals("\\n")){
             tokenList.add("\\E");
         }
-
+        int lineCount = 1;
         for (String token : tokenList) {
             if (token.equals("IS") || token.equals("PRINT")) { // Check if the token is capitalized
                 tokenTypes.add(TokenType.KEYWORD); // Assign to KEYWORD
@@ -46,20 +47,28 @@ public class Lexer {
                 tokenTypes.add(TokenType.STRING);
             }
             else if (token.equals("\\n")){
+                lineCount++;
                 tokenTypes.add(TokenType.NEWLINE);
             }else if (token.equals("\\E")){
                 tokenTypes.add(TokenType.EOF);
             }
             else {
+                // quit early
+                System.out.println("unknow token: '" + token + "' or symbol, expected a: Identifier, Keyword, number, or native symbol in line " + lineCount);
                 tokenTypes.add(TokenType.UNKNOWN);
+                unknownToken = true;
             }
         }
 
-        printTokens(tokenList, tokenTypes);
-        List<Token> tokens = getTokenList(tokenTypes, tokenList);
-        System.out.println(tokens);
+        if (unknownToken == false) {
+            printTokens(tokenList, tokenTypes);
+            List<Token> tokens = getTokenList(tokenTypes, tokenList);
+            System.out.println(tokens);
+            return tokens;
+        }else {
+            return null;
+        }
 
-        return tokens;
     }
 
     private List<Token> getTokenList(List<TokenType> tokenTypes, List<String> tokenList) {
