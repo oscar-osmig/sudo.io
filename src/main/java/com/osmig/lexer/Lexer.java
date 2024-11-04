@@ -19,7 +19,6 @@ public class Lexer {
         List<String> lines = this.lines; // Example list
         List<String> tokenList = new ArrayList<>();
         List<TokenType> tokenTypes = new ArrayList<>();
-        List<Token> tokens = new ArrayList<>();
 
         for (String line : lines) {
             String[] pieces = line.split(" "); // Split each line by space
@@ -57,13 +56,14 @@ public class Lexer {
         }
 
         printTokens(tokenList, tokenTypes);
-        List<Token> tokens1 = getTokenList(tokens,tokenTypes, tokenList);
-        System.out.println(tokens1);
+        List<Token> tokens = getTokenList(tokenTypes, tokenList);
+        System.out.println(tokens);
 
-        return tokens1;
+        return tokens;
     }
 
-    private List<Token> getTokenList(List<Token> tokens, List<TokenType> tokenTypes, List<String> tokenList) {
+    private List<Token> getTokenList(List<TokenType> tokenTypes, List<String> tokenList) {
+        List<Token> tokens = new ArrayList<>();
         System.out.println("~made into token and added to list ~");
         for (int i = 0; i< tokenList.size(); i++){
             tokens.add(i, new Token(tokenTypes.get(i), tokenList.get(i)));
