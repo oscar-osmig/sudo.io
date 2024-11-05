@@ -1,2 +1,1 @@
-a IS 10.0
-PRINT a
+x INT 10.0

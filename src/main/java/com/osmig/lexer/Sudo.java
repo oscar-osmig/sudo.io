@@ -18,6 +18,9 @@ public class Sudo {
         //System.out.println(codeLines.getFirst());
         List<String> lines = codeScanner();
         Lexer lexer = new Lexer(lines);
+//        List<Token> tokens = lexer.tokenizeEachLine();
+//        Parser parser = new Parser(tokens);
+//        parser.parseAssignment();
 
 //        System.out.println("\n============  code  ============");
 //        for (String line : lines){

@@ -37,11 +37,11 @@ public class Lexer {
         }
         int lineCount = 1;
         for (String token : tokenList) {
-            if (token.equals("IS") || token.equals("PRINT")) { // Check if the token is capitalized
+            if (token.equals("IS") || token.equals("PRINT") || token.equals("INT")) { // Check if the token is capitalized
                 tokenTypes.add(TokenType.KEYWORD); // Assign to KEYWORD
             } else if (isIdentifier(token)){
                 tokenTypes.add(TokenType.IDENTIFIER);
-            }else if (isDecimalNumber(token)) { // Check if token is a decimal number
+            }else if (isNumber(token)) { // Check if token is a number
                 tokenTypes.add(TokenType.NUMBER);
             }else if (isStringLiteral(token)){
                 tokenTypes.add(TokenType.STRING);
@@ -99,11 +99,8 @@ public class Lexer {
         return token.matches("^\".*\"$");
     }
 
-    private boolean isDecimalNumber(String token) {
-        String decimalRegex = "-?\\d+\\.\\d+";
-        Pattern pattern = Pattern.compile(decimalRegex);
-        Matcher matcher = pattern.matcher(token);
-        return matcher.matches(); // Returns true if the token matches the regex
+    private boolean isNumber(String token) {
+         return token.matches("-?\\d+(\\.\\d+)?");
     }
 
     private boolean isIdentifier(String s) {
