@@ -1,2 +1,2 @@
-PRINT "Hello, World!"
-PRINT 3
+PRINT "Hello, World!\n"
+PRINT 2.4

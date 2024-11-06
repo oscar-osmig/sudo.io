@@ -115,10 +115,25 @@ public class Parser {
 
         Token nextToken = tokenList.get(currentPosition);
         if (nextToken.getType() == TokenType.STRING) {
-            System.out.println(nextToken.getValue());
-            currentPosition++;
+            String stringValue = nextToken.getValue();
+            String unquotedValue = stringValue.substring(1, stringValue.length() - 1);
+            if (unquotedValue.contains("\\n")) {
+                //System.out.println("The string contains a newline sequence: \\n");
+                unquotedValue = unquotedValue.replace("\\n","");
+                System.out.println(unquotedValue);
+                currentPosition++;
+            }else {
+                System.out.print(unquotedValue);
+                currentPosition++;
+            }
+
         } else if (nextToken.getType() == TokenType.NUMBER) {
-            System.out.println(nextToken.getValue());
+            System.out.print(nextToken.getValue());
+            currentPosition++;
+        } else if (nextToken.getValue().equals(" ")) {
+            String stringValue = nextToken.getValue();
+            String unquotedValue = stringValue.substring(1, stringValue.length() - 1);
+            System.out.println(unquotedValue);
             currentPosition++;
         } else {
 
@@ -130,7 +145,7 @@ public class Parser {
                 // look up variables value on table
                 if (symbolTable.contains(variableName)) {
                     Object value = symbolTable.get(variableName);
-                    System.out.println(value);
+                    System.out.print(value);
                 } else {
                     System.out.println("Error: Undefined variable -> " + variableName);
                 }
