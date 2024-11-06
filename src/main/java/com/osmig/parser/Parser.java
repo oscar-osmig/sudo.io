@@ -20,18 +20,20 @@ public class Parser {
         }
     }
 
-    public void parse() { // the logic executor
-        while (currentPosition < tokenList.size()){
-            Token token = tokenList.get(currentPosition);
+    public void parse() {
+        //the logic executor
+        if (tokenList != null) {
+            while (currentPosition < tokenList.size()) {
+                Token token = tokenList.get(currentPosition);
 
-            // checking if the token is an identifier to start assignment
-            if (token.getType() == TokenType.IDENTIFIER){
-                parseAssignment();
-            }else {
-                currentPosition++;
+                // checking if the token is an identifier to start assignment
+                if (token.getType() == TokenType.IDENTIFIER) {
+                    parseAssignment();
+                } else {
+                    currentPosition++;
+                }
             }
         }
-
     }
 
     public void parseAssignment() {

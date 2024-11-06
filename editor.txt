@@ -1,3 +1,4 @@
-x INT 10.54
-y 20.5
-z "I love my wifey"
+
+madison INT 21.10
+osmig 22.11
+status "Madison & Osmig <3"

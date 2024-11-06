@@ -11,7 +11,6 @@ public class Lexer {
 
     public Lexer(List<String> lines) throws IOException {
         this.lines = lines;
-        tokenizeEachLine();
     }
 
     private static final Set<String> KEYWORDS = Set.of("PRINT", "INT", "LOOP"); // Add any other keywords here
@@ -57,7 +56,7 @@ public class Lexer {
                 System.out.println("unknow token: '" + token + "' or symbol, expected a: Identifier, Keyword, number, or native symbol in line " + lineCount);
                 tokenTypes.add(TokenType.UNKNOWN);
                 unknownToken = true;
-                break;
+                //break;
             }
         }
 
