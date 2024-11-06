@@ -1,1 +1,3 @@
-x INT 10.0
+x INT 10.54
+y 20.5
+z "I love my wifey"

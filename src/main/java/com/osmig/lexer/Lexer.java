@@ -62,9 +62,9 @@ public class Lexer {
         }
 
         if (unknownToken == false) {
-            printTokens(tokenList, tokenTypes);
+            //printTokens(tokenList, tokenTypes);
             List<Token> tokens = getTokenList(tokenTypes, tokenList);
-            System.out.println(tokens);
+            //System.out.println(tokens);
             return tokens;
         }else {
             return null;
@@ -74,8 +74,8 @@ public class Lexer {
 
     private List<Token> getTokenList(List<TokenType> tokenTypes, List<String> tokenList) {
         List<Token> tokens = new ArrayList<>();
-        System.out.println("~made into token and added to list ~");
-        System.out.println("[token type :: value, ...]");
+        //System.out.println("~made into token and added to list ~");
+        //System.out.println("[token type :: value, ...]");
         for (int i = 0; i< tokenList.size(); i++){
             tokens.add(i, new Token(tokenTypes.get(i), tokenList.get(i)));
             // sout(tokens)

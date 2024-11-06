@@ -20,60 +20,89 @@ public class Parser {
         }
     }
 
-//    public void parse() { // the logic executor
-//        parseAssignment();
-//
-//    }
+    public void parse() { // the logic executor
+        while (currentPosition < tokenList.size()){
+            Token token = tokenList.get(currentPosition);
 
-    public void parseAssignment()
-    {
-        Token indentifierToken = matchToken(TokenType.IDENTIFIER);
-        if (indentifierToken == null){
-            error("Expected identifier"); // make error
-            return;
+            // checking if the token is an identifier to start assignment
+            if (token.getType() == TokenType.IDENTIFIER){
+                parseAssignment();
+            }else {
+                currentPosition++;
+            }
         }
-
-        Object  value = parseValue(); // parse value after identifier
-        if (value != null){
-            symbolTable.assign(indentifierToken.getValue(), value);
-            System.out.println("Assigned " + value + " to " + indentifierToken.getValue());
-        }else {
-            error("Expected value after identifier");
-        }
-
 
     }
 
-    private Object parseValue(){
+    public void parseAssignment() {
+        Token identifierToken = matchToken(TokenType.IDENTIFIER);
         Token nextToken = tokenList.get(currentPosition);
 
-        if(nextToken.getType() == TokenType.KEYWORD && "INT".equals(nextToken.getValue())){
-            matchToken(TokenType.KEYWORD); // consume "INT"
-            Token numberToken = matchToken(TokenType.NUMBER);
-            if (numberToken != null){
-                return Integer.parseInt(numberToken.getValue());
-            }
-        } else if (nextToken.getType() == TokenType.NUMBER) {
-            matchToken(TokenType.NUMBER);
-            return Double.parseDouble(nextToken.getValue());
-        } else if (nextToken.getType() == TokenType.STRING) {
-            matchToken(TokenType.STRING);
-            return nextToken.getValue();
+        // Check for the INT keyword and match it
+        boolean isInt = false;
+        if (nextToken.getType() == TokenType.KEYWORD && nextToken.getValue().equals("INT")) {
+            matchToken(TokenType.KEYWORD); // Consume the INT token
+            isInt = true; // Set flag to indicate INT was specified
         }
 
-        // if no match, return null to indicate a parsing error
-        return null;
+        // Match value: it could be either a number or a string
+        Token valueToken = matchToken(TokenType.NUMBER, TokenType.STRING);
+
+        // Parse the value (this will now handle both numbers and strings)
+        Object value = parseValue(valueToken, isInt);
+
+        // Save the parsed value to the symbol table under the identifier
+        symbolTable.assign(identifierToken.getValue(), value);
+
+        // Print the assignment result
+        System.out.println("Assigned: " +   identifierToken.getValue()+ " = " + symbolTable.get(identifierToken.getValue()));
 
     }
+
+
+
+    private Object parseValue(Token valueToken, boolean isInt) {
+        if (valueToken.getType() == TokenType.NUMBER) {
+            String valueStr = valueToken.getValue();
+
+            // If INT was specified, convert to integer
+            if (isInt) {
+                if (valueStr.contains(".")) {
+                    // Truncate to integer by ignoring decimal part
+                    return Integer.parseInt(valueStr.substring(0, valueStr.indexOf(".")));
+                } else {
+                    return Integer.parseInt(valueStr);
+                }
+            } else {
+                // If INT was not specified, treat as a double
+                return Double.parseDouble(valueStr);
+            }
+        }
+
+        // Handle string type
+        if (valueToken.getType() == TokenType.STRING) {
+            return valueToken.getValue();
+        }
+
+        // If no valid type matched, throw an error
+        throw new RuntimeException("Invalid value for Assignment");
+    }
+
 
     private void error(String message){
         System.out.println("Parse error: " + message);
     }
 
-    private Token matchToken(TokenType expectedType){
-        if (currentPosition < tokenList.size() && tokenList.get(currentPosition).getType() == expectedType){
-            return tokenList.get(currentPosition++);
+    private Token matchToken(TokenType... expectedTypes){
+        Token currentToken = tokenList.get(currentPosition);
+        // check if the current token type matches any expected types
+        for (TokenType expectedType : expectedTypes){
+            if (currentToken.getType() == expectedType){
+                currentPosition++;
+                return currentToken;
+            }
         }
+        // If no match is found, return null
         return null; // indicates a mismatch or missing token
     }
 

@@ -14,19 +14,13 @@ import java.util.List;
 public class Sudo {
     public static List<String> lineStack = new ArrayList<>();
     public static void main(String[] args) throws IOException {
-        //List<String> codeLines  = codeScanner("editor.txt"); // returns list of each line of code
-        //System.out.println(codeLines.getFirst());
+
         List<String> lines = codeScanner();
         Lexer lexer = new Lexer(lines);
-//        List<Token> tokens = lexer.tokenizeEachLine();
-//        Parser parser = new Parser(tokens);
-//        parser.parseAssignment();
+        List<Token> tokens = lexer.tokenizeEachLine();
+        Parser parser = new Parser(tokens);
+        parser.parse();
 
-//        System.out.println("\n============  code  ============");
-//        for (String line : lines){
-//            System.out.println(line);
-//        }
-//        System.out.println("============ output ============");
 
     }
         public static List<String> codeScanner() throws IOException {
