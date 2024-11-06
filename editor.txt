@@ -1,2 +1,5 @@
-PRINT "Hello, World!\n"
-PRINT 2.4
+hello 1
+y INT 10.9
+x y
+PRINT "hello\n"
+PRINT x

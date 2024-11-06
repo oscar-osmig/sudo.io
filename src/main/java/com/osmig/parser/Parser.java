@@ -50,7 +50,7 @@ public class Parser {
         }
 
         // Match value: it could be either a number or a string
-        Token valueToken = matchToken(TokenType.NUMBER, TokenType.STRING);
+        Token valueToken = matchToken(TokenType.NUMBER, TokenType.STRING, TokenType.IDENTIFIER);
 
         // Parse the value (this will now handle both numbers and strings)
         Object value = parseValue(valueToken, isInt);
@@ -86,6 +86,15 @@ public class Parser {
         // Handle string type
         if (valueToken.getType() == TokenType.STRING) {
             return valueToken.getValue();
+        }
+        // return
+        if (valueToken.getType() == TokenType.IDENTIFIER) {
+            if (symbolTable.contains(valueToken.getValue())){
+                return symbolTable.get(valueToken.getValue());
+            }else {
+                throw new RuntimeException("Cannot assign empty variable to a variable");
+            }
+
         }
 
         // If no valid type matched, throw an error
