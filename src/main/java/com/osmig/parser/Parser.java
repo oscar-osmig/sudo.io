@@ -117,6 +117,9 @@ public class Parser {
         if (nextToken.getType() == TokenType.STRING) {
             System.out.println(nextToken.getValue());
             currentPosition++;
+        } else if (nextToken.getType() == TokenType.NUMBER) {
+            System.out.println(nextToken.getValue());
+            currentPosition++;
         } else {
 
             // expect identifier after Print
