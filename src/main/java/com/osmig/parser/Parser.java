@@ -29,6 +29,8 @@ public class Parser {
                 // checking if the token is an identifier to start assignment
                 if (token.getType() == TokenType.IDENTIFIER) {
                     parseAssignment();
+                } else if (token.getType() == TokenType.KEYWORD && token.getValue().equals("PRINT")) {
+                    handlePrint();
                 } else {
                     currentPosition++;
                 }
@@ -57,7 +59,7 @@ public class Parser {
         symbolTable.assign(identifierToken.getValue(), value);
 
         // Print the assignment result
-        System.out.println("Assigned: " +   identifierToken.getValue()+ " = " + symbolTable.get(identifierToken.getValue()));
+        //System.out.println("Assigned: " +   identifierToken.getValue() + " = " + symbolTable.get(identifierToken.getValue()));
 
     }
 
@@ -109,7 +111,24 @@ public class Parser {
     }
 
     private void handlePrint() {
+        matchToken(TokenType.KEYWORD); // comsume the PRINT keyword
 
+        // expect identifier after Print
+        Token identifierToken = matchToken(TokenType.IDENTIFIER);
+        if (identifierToken != null){
+            String variableName = identifierToken.getValue();
+
+            // look up variables value on table
+            if (symbolTable.contains(variableName)){
+                Object value = symbolTable.get(variableName);
+                System.out.println(value);
+            }else {
+                System.out.println("Error: Undefined variable -> " + variableName);
+            }
+
+        }else {
+            System.out.println("Error: Expected an identifier after PRINT ");
+        }
     }
 
     public List<Token> getTokenList() {
