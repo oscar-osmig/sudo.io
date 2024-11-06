@@ -1,5 +1,5 @@
 madison INT 21.10
-osmig 22.11
+osmig 22.11 +
 status "Madison & Osmig <3"
 PRINT status
 PRINT madison

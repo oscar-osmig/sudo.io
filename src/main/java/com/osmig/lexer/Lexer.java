@@ -44,8 +44,9 @@ public class Lexer {
                 tokenTypes.add(TokenType.NUMBER);
             }else if (isStringLiteral(token)){
                 tokenTypes.add(TokenType.STRING);
-            }
-            else if (token.equals("\\n")){
+            } else if (token.equals("+")) {
+                tokenTypes.add(TokenType.SYMBOL);
+            } else if (token.equals("\\n")){
                 lineCount++;
                 tokenTypes.add(TokenType.NEWLINE);
             }else if (token.equals("\\E")){
@@ -61,7 +62,7 @@ public class Lexer {
         }
 
         if (unknownToken == false) {
-            //printTokens(tokenList, tokenTypes);
+            printTokens(tokenList, tokenTypes);
             List<Token> tokens = getTokenList(tokenTypes, tokenList);
             //System.out.println(tokens);
             return tokens;
