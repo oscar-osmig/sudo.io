@@ -62,7 +62,7 @@ public class Lexer {
         }
 
         if (unknownToken == false) {
-            printTokens(tokenList, tokenTypes);
+            //printTokens(tokenList, tokenTypes);
             List<Token> tokens = getTokenList(tokenTypes, tokenList);
             //System.out.println(tokens);
             return tokens;

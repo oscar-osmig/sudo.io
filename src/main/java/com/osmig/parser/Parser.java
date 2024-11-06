@@ -111,23 +111,30 @@ public class Parser {
     }
 
     private void handlePrint() {
-        matchToken(TokenType.KEYWORD); // comsume the PRINT keyword
+        matchToken(TokenType.KEYWORD); // consume the PRINT keyword
 
-        // expect identifier after Print
-        Token identifierToken = matchToken(TokenType.IDENTIFIER);
-        if (identifierToken != null){
-            String variableName = identifierToken.getValue();
+        Token nextToken = tokenList.get(currentPosition);
+        if (nextToken.getType() == TokenType.STRING) {
+            System.out.println(nextToken.getValue());
+            currentPosition++;
+        } else {
 
-            // look up variables value on table
-            if (symbolTable.contains(variableName)){
-                Object value = symbolTable.get(variableName);
-                System.out.println(value);
-            }else {
-                System.out.println("Error: Undefined variable -> " + variableName);
+            // expect identifier after Print
+            Token identifierToken = matchToken(TokenType.IDENTIFIER);
+            if (identifierToken != null) {
+                String variableName = identifierToken.getValue();
+
+                // look up variables value on table
+                if (symbolTable.contains(variableName)) {
+                    Object value = symbolTable.get(variableName);
+                    System.out.println(value);
+                } else {
+                    System.out.println("Error: Undefined variable -> " + variableName);
+                }
+
+            } else {
+                System.out.println("Error: Expected an identifier after PRINT ");
             }
-
-        }else {
-            System.out.println("Error: Expected an identifier after PRINT ");
         }
     }
 
